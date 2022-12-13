@@ -2,11 +2,11 @@
 #include <thread>
 #include <chrono>
 
-int main() {
-    int i = 0;
+int global_index = 0;
 
+int main() {
     while (true) {
-        std::cout << i++ << std::endl;
+        std::cout << global_index++ << std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
