@@ -37,14 +37,15 @@ public:
         parse_string_pattern(pattern);
     }
 
-    uintptr_t scan(const std::vector<uint8_t> &buffer) const {
+    template<typename T>
+    uintptr_t scan(T begin, T end) const {
         const auto comparator = [](auto byte, auto pair) {
+            // treat everything as equal to a wildcard, compare others normally
             return pair.second || byte == pair.first;
         };
 
-        const auto result = std::search(buffer.begin(), buffer.end(),
-            pattern.begin(), pattern.end(), comparator);
+        const auto result = std::search(begin, end, pattern.begin(), pattern.end(), comparator);
 
-        return result == buffer.end() ? 0 : (result - buffer.begin() + offset);
+        return result == end ? 0 : (result - begin + offset);
     }
 };

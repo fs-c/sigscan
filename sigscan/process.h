@@ -8,8 +8,7 @@
 #include <string_view>
 #include <exception>
 #include <format>
-
-class Module;
+#include <functional>
 
 class Process {
 public:
@@ -30,7 +29,14 @@ public:
     template<typename T>
     T read_memory(uintptr_t address) const;
 
-    Module find_module(std::string_view name) const;
+    uintptr_t find_signature(const Signature&& signature) const;
+
+    uintptr_t find_signature(const Signature&& signature, std::string_view module_name) const;
+
+private:
+    void for_each_module(const std::function<bool(MODULEENTRY32 *)>& continue_predicate) const;
+
+    uintptr_t find_signature(const Signature &signature, uintptr_t initial_address, uintptr_t max_address) const;
 };
 
 template<typename T>

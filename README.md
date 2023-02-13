@@ -1,0 +1,1 @@
+Example code for [a blog post](https://fsoc.space/words/refactoring-a-pattern-scanner/).
